@@ -1,6 +1,8 @@
 const express = require("express");
 
-const { CreateNewCityController, GetAllCityController } = require("../conroller/City.Controller");
+const { CreateNewCityController, GetAllCityController, UpdateCityController, DeleteCityController} = require("../controller/City.Controller");
+
+const { AdminAuthorizationMiddleware} = require("./../middlewares/Authorization.middleware")
 
 const CityRouter = express.Router();
 
@@ -9,8 +11,10 @@ const CityRouter = express.Router();
                    
 //     })
 
-CityRouter.post("/add", CreateNewCityController)
+CityRouter.post("/add",AdminAuthorizationMiddleware, CreateNewCityController)
 CityRouter.get("/all", GetAllCityController)
+CityRouter.put("/update",AdminAuthorizationMiddleware, UpdateCityController)
+CityRouter.delete("/delete", DeleteCityController)
 
 
 module.exports = CityRouter;  //exported the router 
